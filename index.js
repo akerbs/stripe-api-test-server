@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST); //STRIPE_SECRET_PRODUCTION
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST); //STRIPE_SECRET_LIVE
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -11,8 +12,19 @@ app.use(cors());
 
 app.post("/stripe/charge", cors(), async (req, res) => {
   console.log("stripe-routes.js 9 | route reached", req.body);
-  let { amount, id, currency } = req.body;
-  console.log("stripe-routes.js 10 | amount and id", amount, currency, id);
+  let {
+    amount,
+    id,
+    currency,
+    //  receipt_email
+  } = req.body;
+  console.log(
+    "stripe-routes.js 10 | amount and id",
+    amount,
+    currency,
+    id
+    // receipt_email
+  );
   try {
     const payment = await stripe.paymentIntents.create({
       amount: amount,
@@ -20,12 +32,14 @@ app.post("/stripe/charge", cors(), async (req, res) => {
       description: "Your Company Description",
       payment_method: id,
       confirm: true,
+      // receipt_email: receipt_email,
     });
     console.log("stripe-routes.js 19 | payment", payment);
     res.json({
       message: "Payment Successful",
       success: true,
     });
+    // console.log("f o r m:", form);
   } catch (error) {
     console.log("stripe-routes.js 17 | error", error);
     res.json({
