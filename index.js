@@ -10,6 +10,26 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+server.use(function (req, res, next) {
+  // res.set("Access-Control-Allow-Origin", "*")
+  // res.set("Access-Control-Allow-Credentials", "true")
+  res.header("Access-Control-Allow-Origin", "*");
+  // res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "*");
+
+  next();
+});
+
+server.options("*", (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Headers", "Content-Type");
+  res.send("ok");
+});
+
 server.get("/", (req, res) => {
   res.send("Hello, Mr. AK!");
 });
