@@ -10,6 +10,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
+server.get("/", (req, res) => {
+  res.send("Hello, Mr. AK!");
+});
+
 app.post("/stripe/charge", cors(), async (req, res) => {
   console.log("stripe-routes.js 9 | route reached", req.body);
   let {
