@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "engines": {
+    "node": "12.x"
   },
-  "keywords": [],
-  "author": "",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "author": "Anatol Kerbs <anker2702@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
